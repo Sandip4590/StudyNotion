@@ -3,6 +3,9 @@ const OTP = require("../models/OTP");
 const otpGenerator = require("otp-generator");
 const bcrypt = require("bcrypt");
 const Profile = require("../models/Profile");
+const jwt = require("jsonwebtoken")
+
+require("dotenv").config();
 
 //otp send
 exports.sendOtp = async (req, res) => {
@@ -188,3 +191,73 @@ exports.signUp = async (req, res) => {
     })
   }
 };
+exports.login = async(req,res) => {
+
+  try{
+  //fetch data from req ki body
+
+
+    const {email, password} = req.body;
+
+
+
+  // validation
+
+
+  if(!email || !password){
+    return res.status(403).json({
+      success:false,
+      message:"All fiels are required"
+    })
+  }
+
+
+
+  // check usr existing
+  const user = await User.findOne({email}).populate("additionalDetail");
+
+  if(!user){
+    return res.status(401).json({
+      success:false,
+      message:"User is Not Register,Please Sign-Up first"
+    })
+  }
+
+  //generata JWT token , after matching password
+
+
+  if(await bcrypt.compare(password,user.password)){
+
+    const payload = {
+      email : user.email,
+      id : user._id,
+      accountType:user.accountType,
+
+    }
+      const token =  jwt.sign(payload,process.env.JWT_SECRET,{
+        expiresIn:"2h",
+      })
+  }
+
+
+
+
+
+  // match creditional 
+
+
+
+
+
+
+
+  }catch(error){
+
+
+
+  }
+
+
+
+  // sent response
+}
