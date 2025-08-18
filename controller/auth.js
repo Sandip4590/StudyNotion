@@ -244,11 +244,11 @@ exports.login = async (req, res) => {
 };
 
 exports.changePassword = async (req, res) => {
-  //get data from req ki body old pass new pass and conf new pass
+  
 
   try {
     const { oldPasswprd, newPassword, confirmNewPassword } = req.body;
-    // validation
+  
 
     if (!oldPasswprd || !newPassword || !confirmNewPassword) {
       return res.status(403).json({
@@ -298,14 +298,14 @@ exports.changePassword = async (req, res) => {
        <p>If this wasn't you, please reset your password immediately.</p>`
     );
 
-    // then send mail password is updated
+    
 
     return res.status(200).json({
       success: true,
       message: "Password Chnaged SuccessFully",
     });
 
-    // return response
+  
   } catch (error) {
     console.error(error);
     return res.status(500).json({
