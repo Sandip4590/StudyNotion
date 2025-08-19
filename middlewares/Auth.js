@@ -51,40 +51,36 @@ exports.isStudent = async (req, res, next) => {
   }
 };
 
-
-exports.isInstructor = async(req, res) => {
-  try{
-
-    if(req.user.accountType !== "instructor"){
+exports.isInstructor = async (req, res) => {
+  try {
+    if (req.user.accountType !== "instructor") {
       return res.status(401).json({
-        success:false,
-        message:"This is Protected Route For Instructor Only"
-      })
+        success: false,
+        message: "This is Protected Route For Instructor Only",
+      });
     }
-
-  }catch(error){
+    next();
+  } catch (error) {
     return res.status(500).json({
-      success:false,
-      message:"User Role Can Not Be Verified"
-    })
-
+      success: false,
+      message: "User Role Can Not Be Verified",
+    });
   }
-}
+};
 
-exports.isAdmin = async(req,res) =>{
-  try{
-
-    if(req.user.accountType !== "Admin"){
+exports.isAdmin = async (req, res) => {
+  try {
+    if (req.user.accountType !== "Admin") {
       return res.status(401).json({
-        success:false,
-        message:"This iS Protected Routes for Admin Only "
-      })
+        success: false,
+        message: "This iS Protected Routes for Admin Only ",
+      });
     }
-
-  }catch(error){
+    next();
+  } catch (error) {
     return res.status(500).json({
-      success:false,
-      message:"User Role Can Not Be Verified"
-    })
+      success: false,
+      message: "User Role Can Not Be Verified",
+    });
   }
-}
+};
